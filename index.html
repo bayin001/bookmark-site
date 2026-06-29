@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>个人导航 | FRE123 Style</title>
+  <meta name="description" content="个人常用资源单页导航">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --panel-soft: #f8fafc;
+      --text: #182230;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --brand: #16a34a;
+      --brand-deep: #047857;
+      --accent: #2563eb;
+      --warm: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 16px 40px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(22, 163, 74, .08), rgba(37, 99, 235, 0) 340px),
+        var(--bg);
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(228, 231, 236, .82);
+      background: rgba(245, 247, 251, .86);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 156px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      box-shadow: 0 10px 24px rgba(22, 163, 74, .24);
+    }
+
+    .brand-name {
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav a {
+      min-height: 34px;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      color: #344054;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .nav a:hover {
+      background: #fff;
+      color: var(--brand-deep);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
+    }
+
+    .hero {
+      padding: 48px 0 26px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid rgba(22, 163, 74, .18);
+      border-radius: var(--radius);
+      color: var(--brand-deep);
+      background: rgba(22, 163, 74, .08);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      max-width: 760px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .search-box {
+      margin-top: 24px;
+      max-width: 680px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--muted);
+      flex: 0 0 auto;
+    }
+
+    #search {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      font-size: 15px;
+      background: transparent;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      min-height: 92px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .74);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .06);
+    }
+
+    .stat b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .quick {
+      padding: 4px 0 20px;
+    }
+
+    .quick-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quick a {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: #344054;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .quick a:hover {
+      border-color: rgba(22, 163, 74, .32);
+      color: var(--brand-deep);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .07);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: 18px 0 56px;
+    }
+
+    .section {
+      scroll-margin-top: 92px;
+      margin-top: 28px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 23px;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 104px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .045);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(37, 99, 235, .28);
+      box-shadow: 0 18px 32px rgba(15, 23, 42, .1);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+    }
+
+    .icon img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .fallback {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--brand));
+    }
+
+    .title {
+      min-width: 0;
+      font-size: 16px;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .url {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .desc {
+      margin: 13px 0 0;
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin-top: 12px;
+      padding: 0 8px;
+      border-radius: var(--radius);
+      background: #f2f4f7;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .empty {
+      display: none;
+      min-height: 120px;
+      margin-top: 24px;
+      place-items: center;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: rgba(255, 255, 255, .62);
+    }
+
+    .footer {
+      padding: 24px 0 40px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .wrap {
+        width: min(100% - 22px, 1160px);
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .section-head span {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" aria-label="返回顶部">
+        <span class="brand-mark">F</span>
+        <span class="brand-name">个人导航<span class="brand-sub">FRE123 inspired</span></span>
+      </a>
+      <nav class="nav" aria-label="分类导航">
+        <a href="#monthly">每月必用</a>
+        <a href="#entertainment">娱乐</a>
+        <a href="#commerce">电商</a>
+        <a href="#projects">找项目</a>
+        <a href="#current">目前在做</a>
+        <a href="#ai">AI相关</a>
+        <a href="#tools">工具</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">常用站点 · 一页直达</span>
+        <h1>把工作、项目、AI 与日常入口收进一个干净的导航页</h1>
+        <p>基于 FRE123 的资源导航思路，保留轻量分组、快速检索和卡片入口。点击任意卡片会在新标签页打开。</p>
+        <label class="search-box" for="search">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="search" type="search" placeholder="搜索名称、分类或域名，例如 ChatGPT / 电商 / github">
+        </label>
+      </div>
+      <div class="stats" aria-label="导航统计">
+        <div class="stat"><b>7</b><span>个分类</span></div>
+        <div class="stat"><b>26</b><span>个入口</span></div>
+        <div class="stat"><b>11</b><span>个 AI 工具</span></div>
+        <div class="stat"><b>1</b><span>页完成</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick">
+    <div class="wrap quick-inner">
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+      <a href="http://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.doubao.com/chat/" target="_blank" rel="noopener noreferrer">豆包</a>
+      <a href="https://claude.com/app-unavailable-in-region" target="_blank" rel="noopener noreferrer">Claude</a>
+      <a href="https://www.capcut.cn/" target="_blank" rel="noopener noreferrer">剪映</a>
+      <a href="https://www.1688.com/" target="_blank" rel="noopener noreferrer">1688</a>
+    </div>
+  </section>
+
+  <main class="wrap" id="content"></main>
+  <div class="wrap empty" id="empty">没有找到匹配的导航入口</div>
+
+  <footer class="footer">
+    <div class="wrap">Personal Nav · Inspired by FRE123 · 本页为静态单页导航，可直接部署到任意静态托管服务。</div>
+  </footer>
+
+  <script>
+    const sections = [
+      {
+        id: "monthly",
+        title: "每月必用",
+        note: "财务、监管与网银入口",
+        items: [
+          {
+            title: "深圳市场监管登录",
+            url: "https://amr.sz.gov.cn/psout/jsp/gcloud/pubservice/network/login.jsp",
+            desc: "深圳市场监督管理相关业务登录入口。",
+            tag: "政务"
+          },
+          {
+            title: "兴业企业网银",
+            url: "https://corporatebank.cib.com.cn/firm/openService/checkinglogin.do",
+            desc: "企业银行业务与对账登录入口。",
+            tag: "网银"
+          }
+        ]
+      },
+      {
+        id: "entertainment",
+        title: "娱乐",
+        note: "内容社区与灵感来源",
+        items: [
+          {
+            title: "微博",
+            url: "https://weibo.com/newlogin?tabtype=weibo&gid=102803&openLoginLayer=0&url=https%3A%2F%2Fweibo.com%2F",
+            desc: "热点、社交动态与公共话题。",
+            tag: "社交"
+          },
+          {
+            title: "小红书",
+            url: "https://www.xiaohongshu.com/explore",
+            desc: "生活方式、内容参考与趋势观察。",
+            tag: "社区"
+          }
+        ]
+      },
+      {
+        id: "commerce",
+        title: "电商",
+        note: "平台、文档与采购入口",
+        items: [
+          {
+            title: "Qoo10 卖家中心",
+            url: "https://qsm.qoo10.jp/GMKT.INC.Gsm.Web/login.aspx",
+            desc: "Qoo10 商家后台登录入口。",
+            tag: "跨境"
+          },
+          {
+            title: "金山文档",
+            url: "https://www.kdocs.cn/l/cqU5orV3OoMv",
+            desc: "电商资料、表格与协作文档。",
+            tag: "文档"
+          },
+          {
+            title: "拼多多个人中心",
+            url: "https://mobile.yangkeduo.com/index.html?refer_page_name=personal&refer_page_id=10001_1713600011329_zax3342673&refer_page_sn=10001",
+            desc: "移动端个人中心与订单相关入口。",
+            tag: "购物"
+          },
+          {
+            title: "1688",
+            url: "https://www.1688.com/",
+            desc: "批发采购、货源搜索与供应链平台。",
+            tag: "采购"
+          }
+        ]
+      },
+      {
+        id: "projects",
+        title: "找项目",
+        note: "项目资料与选题库",
+        items: [
+          {
+            title: "飞书项目 Wiki",
+            url: "https://my.feishu.cn/wiki/OyNQwD1lai11vrk0DxJc1RBQnJh",
+            desc: "项目线索、资料沉淀与协作页面。",
+            tag: "项目"
+          }
+        ]
+      },
+      {
+        id: "current",
+        title: "目前在做",
+        note: "域名、代码、托管与建站",
+        items: [
+          {
+            title: "Monster Survivors",
+            url: "http://monstersurvivors.com",
+            desc: "当前项目域名访问入口。",
+            tag: "域名"
+          },
+          {
+            title: "GitHub",
+            url: "http://github.com",
+            desc: "代码仓库、版本管理与项目发布。",
+            tag: "代码"
+          },
+          {
+            title: "Cloudflare",
+            url: "https://cloudflare.com",
+            desc: "DNS、CDN、Pages 与网站托管。",
+            tag: "托管"
+          },
+          {
+            title: "Spaceship",
+            url: "https://www.spaceship.com/zh/",
+            desc: "域名注册、解析与相关服务。",
+            tag: "域名"
+          }
+        ]
+      },
+      {
+        id: "ai",
+        title: "AI相关",
+        note: "对话、生成、视频与客户端",
+        items: [
+          {
+            title: "Claude",
+            url: "https://claude.com/app-unavailable-in-region",
+            desc: "Anthropic Claude 对话入口。",
+            tag: "对话"
+          },
+          {
+            title: "豆包",
+            url: "https://www.doubao.com/chat/",
+            desc: "字节系 AI 对话与创作工具。",
+            tag: "对话"
+          },
+          {
+            title: "即梦 AI",
+            url: "https://jimeng.jianying.com/ai-tool/home/",
+            desc: "AI 图像、视频与创意生成工具。",
+            tag: "生成"
+          },
+          {
+            title: "Gemini",
+            url: "https://gemini.google.com/app",
+            desc: "Google Gemini 对话与多模态助手。",
+            tag: "对话"
+          },
+          {
+            title: "ChatGPT",
+            url: "https://chatgpt.com/",
+            desc: "OpenAI ChatGPT 对话、写作与开发助手。",
+            tag: "对话"
+          },
+          {
+            title: "DeepSeek",
+            url: "https://chat.deepseek.com/",
+            desc: "DeepSeek 在线对话助手。",
+            tag: "对话"
+          },
+          {
+            title: "Kimi",
+            url: "https://www.kimi.com/",
+            desc: "长文本阅读、问答与资料处理。",
+            tag: "阅读"
+          },
+          {
+            title: "Sora",
+            url: "https://sora.chatgpt.com/",
+            desc: "OpenAI 视频生成与创作入口。",
+            tag: "视频"
+          },
+          {
+            title: "Grok",
+            url: "https://grok.com/",
+            desc: "xAI Grok 对话入口。",
+            tag: "对话"
+          },
+          {
+            title: "OiiOii AI",
+            url: "https://www.oiioii.ai/home",
+            desc: "AI 工具聚合与创作入口。",
+            tag: "工具"
+          },
+          {
+            title: "Cherry Studio",
+            url: "https://cherryai.com.cn/",
+            desc: "AI 客户端与多模型使用工具。",
+            tag: "客户端"
+          }
+        ]
+      },
+      {
+        id: "tools",
+        title: "工具",
+        note: "创作与后台管理",
+        items: [
+          {
+            title: "剪映 CapCut",
+            url: "https://www.capcut.cn/",
+            desc: "视频剪辑、模板和创作工具。",
+            tag: "视频"
+          },
+          {
+            title: "GZY Dashboard",
+            url: "https://dash.gzy666.top/dashboard",
+            desc: "个人仪表盘与服务管理入口。",
+            tag: "后台"
+          }
+        ]
+      }
+    ];
+
+    const content = document.querySelector("#content");
+    const empty = document.querySelector("#empty");
+    const search = document.querySelector("#search");
+
+    function hostOf(url) {
+      try {
+        return new URL(url).hostname.replace(/^www\./, "");
+      } catch (error) {
+        return url;
+      }
+    }
+
+    function favicon(url) {
+      return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(hostOf(url))}&sz=64`;
+    }
+
+    function firstChar(title) {
+      return Array.from(title.trim())[0] || "站";
+    }
+
+    function render(filter = "") {
+      const keyword = filter.trim().toLowerCase();
+      let visibleCount = 0;
+
+      content.innerHTML = sections.map((section) => {
+        const items = section.items.filter((item) => {
+          const source = `${section.title} ${item.title} ${item.url} ${item.desc} ${item.tag}`.toLowerCase();
+          return !keyword || source.includes(keyword);
+        });
+
+        if (!items.length) {
+          return "";
+        }
+
+        visibleCount += items.length;
+
+        const cards = items.map((item) => `
+          <a class="card" href="${item.url}" target="_blank" rel="noopener noreferrer" data-search="${section.title} ${item.title} ${hostOf(item.url)} ${item.tag}">
+            <div class="card-top">
+              <span class="icon">
+                <img src="${favicon(item.url)}" alt="" loading="lazy" onerror="this.parentElement.className='icon fallback'; this.parentElement.textContent='${firstChar(item.title)}';">
+              </span>
+              <span>
+                <span class="title">${item.title}</span>
+                <span class="url">${hostOf(item.url)}</span>
+              </span>
+            </div>
+            <p class="desc">${item.desc}</p>
+            <span class="tag">${item.tag}</span>
+          </a>
+        `).join("");
+
+        return `
+          <section class="section" id="${section.id}">
+            <div class="section-head">
+              <h2>${section.title}</h2>
+              <span>${section.note} · ${items.length} 个入口</span>
+            </div>
+            <div class="grid">${cards}</div>
+          </section>
+        `;
+      }).join("");
+
+      empty.style.display = visibleCount ? "none" : "grid";
+    }
+
+    search.addEventListener("input", (event) => render(event.target.value));
+    render();
+  </script>
+</body>
+</html>
